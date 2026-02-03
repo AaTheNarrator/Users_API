@@ -10,7 +10,7 @@ const DEV_SECRET = env.jwt_secret_key;
 
 export interface AuthRequest extends Request {
     user?: {
-        user_id: number,
+        id: number,
         role: UserRole
     }
 }

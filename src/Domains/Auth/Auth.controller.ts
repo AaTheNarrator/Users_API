@@ -9,14 +9,14 @@ async function registration(req : AuthRequest, res : Response) {
     const data = registration_schema.parse(req.body)
     const new_user = await create_user(data)
     const token = jwt_generate(new_user)
-    res.status(200).json(token)
+    res.status(200).json({token})
 }
 
 async function login(req : AuthRequest, res : Response) {
     const data = login_schema.parse(req.body)
     const user = await login_user(data)
     const token = jwt_generate(user!)
-    res.status(200).json(token)
+    res.status(200).json({token})
 }
 
 export {

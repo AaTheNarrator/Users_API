@@ -1,6 +1,6 @@
 import { UserRole } from "generated/prisma/enums";
 
 export interface AuthPayload {
-    user_id: number;
+    id: number;
     role: UserRole;
 }

@@ -27,7 +27,7 @@ export const isAdmin : AccessPolicy = (req) => {
 }
 
 export const isSelf : AccessPolicy = (req) => {
-    return Number(req.params.id) === req.user!.user_id
+    return Number(req.params.id) === req.user!.id
 }
 
 export const or = (...policy: AccessPolicy[]) : AccessPolicy => 

@@ -5,7 +5,7 @@ import { UserRole } from "generated/prisma/enums";
 
 
 async function get_users(req: AuthRequest, res: Response) {
-    const users = get_users_db()
+    const users = await get_users_db()
     res.status(200).json(users)
 }
 

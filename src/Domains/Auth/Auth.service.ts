@@ -33,8 +33,8 @@ async function login_user(data : login_data) {
         }
     })
 
-    if (!user && bcrypt.compareSync(data.password, user!.password_hash)) {
-        throw new Error("Email or password incorrect")
+    if (!user || !bcrypt.compareSync(data.password, user.password_hash)) {
+        throw new Error("Email or password incorrect");
     }
 
     return user
