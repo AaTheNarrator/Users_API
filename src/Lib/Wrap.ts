@@ -1,6 +1,13 @@
 import { Request, Response, NextFunction } from "express";
+import { AuthRequest } from "MiddleWare/Auth";
 
-export default function wrap(callback: any) { 
+type AsyncHandler = (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction
+) => Promise<any>
+
+export default function wrap(callback: AsyncHandler) { 
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			await callback(req, res, next);

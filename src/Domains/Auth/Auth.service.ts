@@ -13,7 +13,7 @@ import { login_data } from "Validation/Login";
 async function create_user(data : registration_data) {
     const salt = bcrypt.genSaltSync(12);
     const password_hash = bcrypt.hashSync(data.password, salt);
-    return await db.user.create({
+    const user = await db.user.create({
         data: {
             first_name: data.first_name,
             last_name: data.last_name,
@@ -24,6 +24,7 @@ async function create_user(data : registration_data) {
             is_active: true
         }
     })
+    return jwt_generate(user)
 }
 
 async function login_user(data : login_data) {
@@ -37,7 +38,7 @@ async function login_user(data : login_data) {
         throw new Error("Email or password incorrect");
     }
 
-    return user
+    return jwt_generate(user)
 }
 
 function jwt_generate(data : User) {

@@ -1,11 +1,11 @@
 import { db } from "Lib/Prisma";
 
 async function get_users_db() {
-    return await db.user.findMany()
+    return db.user.findMany()
 }
 
 async function get_user_by_id_db(id: number) {
-    return await db.user.findUnique({
+    return db.user.findUnique({
         where: {
             id: id
         }
@@ -13,7 +13,7 @@ async function get_user_by_id_db(id: number) {
 }
 
 async function block_user_db(id: number) {
-    return await db.user.update({
+    return db.user.update({
         where: {
             id,
         },

@@ -14,7 +14,7 @@ async function get_user_by_id (req: AuthRequest, res: Response) {
     const requested_user = await get_user_by_id_db(requested_user_id)
     
     if (!requested_user) {
-        res.status(404).json({message: "User not found"})
+        return res.status(404).json({message: "User not found"})
     }
 
     res.status(200).json(requested_user)

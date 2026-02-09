@@ -5,3 +5,6 @@ node_modules
 /prisma/migrations
 
 TokenAccess.txt
+
+all_code_in_one_file.js
+all-ts-code.txt

@@ -6,16 +6,24 @@ import { login_schema } from "Validation/Login";
 
 
 async function registration(req : AuthRequest, res : Response) {
-    const data = registration_schema.parse(req.body)
-    const new_user = await create_user(data)
-    const token = jwt_generate(new_user)
+    const result = registration_schema.safeParse(req.body)
+
+    if(!result.success) {
+        return res.status(400).json({error: "Not valid data"})
+    }
+
+    const token = await create_user(result.data)
     res.status(200).json({token})
 }
 
 async function login(req : AuthRequest, res : Response) {
-    const data = login_schema.parse(req.body)
-    const user = await login_user(data)
-    const token = jwt_generate(user!)
+    const result = login_schema.safeParse(req.body)
+    
+    if(!result.success) {
+        return res.status(400).json({error: "Not valid data"})
+    }
+
+    const token = await login_user(result.data)
     res.status(200).json({token})
 }
 
