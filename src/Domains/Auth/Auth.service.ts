@@ -9,11 +9,12 @@ import getEnv from "Lib/GetEnv";
 import { login_data } from "Validation/Login";
 
 
+const env = getEnv();
 
 async function create_user(data : registration_data) {
-    const salt = bcrypt.genSaltSync(12);
-    const password_hash = bcrypt.hashSync(data.password, salt);
-    const user = await db.user.create({
+    const salt = await bcrypt.genSalt(12);
+    const password_hash = await bcrypt.hash(data.password, salt);
+    return db.user.create({
         data: {
             first_name: data.first_name,
             last_name: data.last_name,
@@ -24,7 +25,6 @@ async function create_user(data : registration_data) {
             is_active: true
         }
     })
-    return jwt_generate(user)
 }
 
 async function login_user(data : login_data) {
@@ -38,11 +38,10 @@ async function login_user(data : login_data) {
         throw new Error("Email or password incorrect");
     }
 
-    return jwt_generate(user)
+    return user
 }
 
 function jwt_generate(data : User) {
-    const env = getEnv();
     const payload = {
         id: data.id,
         role: data.role

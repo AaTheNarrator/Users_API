@@ -8,7 +8,7 @@ type AsyncHandler = (
 ) => Promise<any>
 
 export default function wrap(callback: AsyncHandler) { 
-	return async (req: Request, res: Response, next: NextFunction) => {
+	return async (req: AuthRequest, res: Response, next: NextFunction) => {
 		try {
 			await callback(req, res, next);
 		} catch(e) {

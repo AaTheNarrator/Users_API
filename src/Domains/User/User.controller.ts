@@ -2,6 +2,7 @@ import { AuthRequest } from "MiddleWare/Auth";
 import { Response } from "express";
 import { block_user_db, get_user_by_id_db, get_users_db } from "./User.service";
 import { UserRole } from "generated/prisma/enums";
+import { error } from "node:console";
 
 
 async function get_users(req: AuthRequest, res: Response) {
@@ -24,7 +25,11 @@ async function block_user(req: AuthRequest, res: Response) {
     const block_user_id = Number(req.params.id)
     const block_user = await block_user_db(block_user_id)
 
-    res.status(200).json(block_user)
+    if (!block_user.ok) {
+        return res.status(404).json({error: block_user.error})
+    }
+
+    res.status(200).json(block_user.value)
 }
 
 export {

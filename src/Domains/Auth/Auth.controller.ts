@@ -9,10 +9,11 @@ async function registration(req : AuthRequest, res : Response) {
     const result = registration_schema.safeParse(req.body)
 
     if(!result.success) {
-        return res.status(400).json({error: "Not valid data"})
+        return res.status(400).json({error: result.error})
     }
 
-    const token = await create_user(result.data)
+    const user = await create_user(result.data)
+    const token = jwt_generate(user)
     res.status(200).json({token})
 }
 
@@ -20,10 +21,11 @@ async function login(req : AuthRequest, res : Response) {
     const result = login_schema.safeParse(req.body)
     
     if(!result.success) {
-        return res.status(400).json({error: "Not valid data"})
+        return res.status(400).json({error: result.error})
     }
 
-    const token = await login_user(result.data)
+    const user = await login_user(result.data)
+    const token = jwt_generate(user)
     res.status(200).json({token})
 }
 

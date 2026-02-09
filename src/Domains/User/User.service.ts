@@ -13,14 +13,20 @@ async function get_user_by_id_db(id: number) {
 }
 
 async function block_user_db(id: number) {
-    return db.user.update({
+    const user = await get_user_by_id_db(id)
+
+    if (!user) {
+        return { ok: false, error: 'NOT_FOUND' }
+    }
+
+    return { ok: true, value: await db.user.update({
         where: {
             id,
         },
         data: {
             is_active: false
         }
-    })
+    })}
 }
 
 export {
